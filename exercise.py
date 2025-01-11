@@ -1,5 +1,6 @@
 import sys
 import random
+import argparse
 import statistics
 
 def generate_random_numbers(size, lower_bound, upper_bound):
@@ -18,7 +19,9 @@ def generate_random_numbers(size, lower_bound, upper_bound):
     >>> generate_random_numbers(5, 1, 10)
     [5, 3, 7, 2, 9]  # Random output, will vary on each call.
     """
-    pass
+    number = []
+    number = [number.extend(random.randint(lower_bound, upper_bound)) for i in range(size)]
+    return number
 
 
 def calculate_statistics(numbers):
@@ -35,7 +38,11 @@ def calculate_statistics(numbers):
     >>> calculate_statistics([1, 2, 3, 4, 5])
     (3.0, 3)
     """
-    pass
+    mean = statistics.mean(numbers)
+    median = statistics.median(numbers)
+
+    answer = [mean, median]
+    return answer
 
 def parse_command_line_arguments():
     """
@@ -58,7 +65,15 @@ def parse_command_line_arguments():
     >>> parse_command_line_arguments()
     ValueError: Slice indices must be non-negative integers.
     """
-    pass
+    try:
+        parse = argparse.ArgumentParser(description="Parse start and end indices for list slicing.")
+        parse.add_argument = ("start", type=int, help="Start index for slicing")
+        parse.add_argument = ("end", type=int, help="End index for slicing")
+        args = parser.parse_args()
+        return args.start, args.end
+    except:
+        ValueError
+        print "Error, slice indices must be non-negative integers."
 
 def get_slice_of_list(lst, start_index, end_index):
     """
@@ -76,27 +91,27 @@ def get_slice_of_list(lst, start_index, end_index):
     >>> get_slice_of_list([0, 1, 2, 3, 4, 5], 1, 4)
     [1, 2, 3]
     """
-    pass
+    return lst[start_index:end_index]
 
 def driver():
     """Main function to generate numbers, calculate statistics, and print a slice based on command-line arguments."""
-    # random_numbers = generate_random_numbers(100, 1, 1000)
-    # mean, median = calculate_statistics(random_numbers)
+     random_numbers = generate_random_numbers(100, 1, 1000)
+     mean, median = calculate_statistics(random_numbers)
 
-    # try:
-    #     start_index, end_index = parse_command_line_arguments()
-    # except ValueError as e:
-    #     print(f"Error: {e}")
-    #     sys.exit(1)
+     try:
+         start_index, end_index = parse_command_line_arguments()
+     except ValueError as e:
+         print(f"Error: {e}")
+         sys.exit(1)
 
-    # try:
-    #     numbers_slice = get_slice_of_list(random_numbers, start_index, end_index)
-    #     print(f"Sliced list: {numbers_slice}")
-    # except IndexError as e:
-    #     print(f"Error: {e}. Ensure that the provided slice indices are within the range of the list.")
-    #     sys.exit(1)
+     try:
+         numbers_slice = get_slice_of_list(random_numbers, start_index, end_index)
+         print(f"Sliced list: {numbers_slice}")
+     except IndexError as e:
+         print(f"Error: {e}. Ensure that the provided slice indices are within the range of the list.")
+         sys.exit(1)
 
-    # print(f"Mean: {mean:.2f}, Median: {median}")
+     print(f"Mean: {mean:.2f}, Median: {median}")
 
 if __name__ == "__main__":
     driver()
